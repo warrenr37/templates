@@ -1,0 +1,60 @@
+---
+version: "3"
+services:
+  homer:
+    image: b4bz/homer
+    #To build from source, comment previous line and uncomment below
+    #build: .
+    container_name: homer
+    volumes:
+      - ~/docker/homer/:/www/assets
+      - ~/docker/png/:/www/assets/tools
+    ports:
+      - 802:8080
+    environment:
+      - UID=1000
+      - GID=1000
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.homer.rule=Host(`homer.lan.fisherhome.xyz`)"
+      - "traefik.http.services.homer.loadbalancer.server.port=80"
+      - "traefik.http.routers.homer.entrypoints=web"
+  homer-e:
+    image: b4bz/homer
+    #To build from source, comment previous line and uncomment below
+    #build: .
+    container_name: homer-External
+    volumes:
+      - ~/docker/homer-External/:/www/assets
+      - ~/docker/png/:/www/assets/tools
+    ports:
+      - 803:8080
+    environment:
+      - UID=1000
+      - GID=1000
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.homer-e.rule=Host(`homer-ext.lan.fisherhome.xyz`)"
+      - "traefik.http.services.homer-e.loadbalancer.server.port=80"
+      - "traefik.http.routers.homer-e.entrypoints=web"
+  homer-t:
+    image: b4bz/homer
+    #To build from source, comment previous line and uncomment below
+    #build: .
+    container_name: homer-Testing
+    volumes:
+      - ~/docker/homer-Testing/:/www/assets
+      - ~/docker/png/:/www/assets/tools
+    ports:
+      - 804:8080
+    environment:
+      - UID=1000
+      - GID=1000
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.homer-t.rule=Host(`homer-testing.lan.fisherhome.xyz`)"
+      - "traefik.http.services.homer-t.loadbalancer.server.port=80"
+      - "traefik.http.routers.homer-t.entrypoints=web"

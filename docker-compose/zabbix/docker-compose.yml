@@ -1,0 +1,7 @@
+docker run --name some-zabbix-server-pgsql -e DB_SERVER_HOST="some-postgres-server" -e POSTGRES_USER="some-user" -e POSTGRES_PASSWORD="some-password"
+---
+  version: "1"
+  services:
+    zabbix-server:
+      image: zabbix/zabbix-server-pgsql
+    
